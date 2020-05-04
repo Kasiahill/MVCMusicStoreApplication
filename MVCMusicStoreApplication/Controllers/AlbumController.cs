@@ -10,18 +10,18 @@ using MVCMusicStoreApplication.Models;
 
 namespace MVCMusicStoreApplication.Controllers
 {
-    public class StoreManagerController : Controller
+    public class AlbumController : Controller
     {
         private MVCMusicStoreDB db = new MVCMusicStoreDB();
 
-        // GET: StoreManager
+        // GET: Album
         public ActionResult Index()
         {
             var albums = db.Albums.Include(a => a.Artist).Include(a => a.Genre);
             return View(albums.ToList());
         }
 
-        // GET: StoreManager/Details/5
+        // GET: Album/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,7 +36,7 @@ namespace MVCMusicStoreApplication.Controllers
             return View(album);
         }
 
-        // GET: StoreManager/Create
+        // GET: Album/Create
         public ActionResult Create()
         {
             ViewBag.ArtistId = new SelectList(db.Artists, "ArtistId", "Name");
@@ -44,7 +44,7 @@ namespace MVCMusicStoreApplication.Controllers
             return View();
         }
 
-        // POST: StoreManager/Create
+        // POST: Album/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -63,7 +63,7 @@ namespace MVCMusicStoreApplication.Controllers
             return View(album);
         }
 
-        // GET: StoreManager/Edit/5
+        // GET: Album/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,7 +80,7 @@ namespace MVCMusicStoreApplication.Controllers
             return View(album);
         }
 
-        // POST: StoreManager/Edit/5
+        // POST: Album/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -98,7 +98,7 @@ namespace MVCMusicStoreApplication.Controllers
             return View(album);
         }
 
-        // GET: StoreManager/Delete/5
+        // GET: Album/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,7 +113,7 @@ namespace MVCMusicStoreApplication.Controllers
             return View(album);
         }
 
-        // POST: StoreManager/Delete/5
+        // POST: Album/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -131,23 +131,6 @@ namespace MVCMusicStoreApplication.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-        public ActionResult Test()
-        {
-            var albums = db.Albums;
-
-            var albumsByName = (from a in albums
-                                where a.Title == "StormBringer"
-                                select a) ;
-            var albumsByArtist = (from a in albums
-                                  where a.Artist.Name == "chic"
-                                  select a);
-            var albumsByGenres = (from a in albums
-                                  where a.Genre.Name == "Classical"
-                                  orderby a.Title descending
-                                  select a);
-
-            return View();
         }
     }
 }
